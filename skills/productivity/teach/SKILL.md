@@ -9,6 +9,15 @@ The user has asked you to teach them something. This is a stateful request - the
 
 ## Teaching Workspace
 
+Default: teach in the current directory (typically ~/tmp). Persist only on explicit user intent
+("save it", "make it long-running", "persist it", or equivalent): move the workspace to
+`~/LEARNING/<topic>/` and add README.md (what/why/how + current lesson) and AGENTS.md (entry point;
+opening the coding agent in the folder resumes the session). Mid-session persistence requests
+migrate the same way.
+
+Continuing a persisted workspace: read README.md, NOTES.md, learning-records/, and the LATEST
+lesson first - the user is always learning the latest lesson.
+
 Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:
 
 - `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
@@ -52,13 +61,19 @@ A lesson should be **beautiful** — clean, readable typography and layout — s
 
 The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
 
-If possible, open the lesson file for the user by running a CLI command.
+Open the lesson file for the user per [Opening lessons](#opening-lessons) - detect once, persist, reuse. Never improvise the command.
 
-Each lesson should link via HTML anchors to other lessons and reference documents.
+Each lesson links to the previous lesson, the next lesson, and the course front page, so a learner can go start to finish without hunting through files.
+
+The course is a website: keep an `index.html` at the workspace root as the front page - title, mission in one line, every lesson linked in teaching order. Create it with the first lesson; update it whenever lessons are added.
 
 Each lesson should recommend a primary source for the user to read or watch. This should be the most high-quality, high-trust resource you found on the topic.
 
 Each lesson should contain a reminder to ask followup questions to the agent. The agent is their teacher, and can assist with anything that's unclear.
+
+## Opening lessons
+
+Delivery is a capability to resolve, not a command to improvise: find a skill whose description covers showing local content to this user - opens files in their browser, or publishes content to their devices - load it, follow it. If none resolves, serve the workspace on the tailnet interface and hand the human the URL, noting it is ephemeral.
 
 ## Assets
 
